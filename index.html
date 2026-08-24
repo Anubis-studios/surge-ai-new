@@ -593,6 +593,7 @@ footer.site{max-width:860px;margin:44px auto 0;color:var(--muted);font-size:12px
 <script>
 window.$ = (id)=>document.getElementById(id);
 window.PIPPIT = (()=>{
+const root = (typeof window!=="undefined" && window.root) ? window.root : {};
 const NEG = "NSFW, nudity, text, watermark, logo, low quality, blurry";
 const STYLE_MAP = {
   "Photo-realistic":"photo-realistic, high detail, professional photography",
