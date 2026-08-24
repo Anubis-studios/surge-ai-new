@@ -1,0 +1,1379 @@
+<style>
+:root{
+  --bg:#f4f3f8;
+  --card:#ffffff;
+  --border:#e8e5f0;
+  --border2:#d9d4ec;
+  --text:#16151c;
+  --muted:#8d889e;
+  --accent:#7c5cff;
+  --accent-soft:#f0ecff;
+  --pill:#f3f1fa;
+  --shadow:0 8px 30px rgba(40,30,90,.08);
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html{color-scheme:light}
+body{
+  margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);color:var(--text);text-align:left;min-height:100vh;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea,select{font-family:inherit;color:var(--text)}
+a{color:inherit;text-decoration:none}
+
+.sub-banner{
+  background:linear-gradient(100deg,#8f6cff,#b18cff);color:#fff;text-align:center;padding:9px 16px;
+  font-size:13px;position:relative;
+}
+.sub-banner b{font-weight:600}
+.sub-banner .subbtn{background:#fff;color:#7c5cff;font-weight:700;border-radius:999px;padding:5px 13px;margin-left:8px;font-size:12px}
+.sub-banner .x{position:absolute;right:12px;top:50%;transform:translateY(-50%);opacity:.85;color:#fff}
+
+.layout{display:flex;min-height:calc(100vh - 40px)}
+
+/* Sidebar */
+.side{
+  width:232px;flex:none;background:#fff;border-right:1px solid var(--border);padding:16px 10px;
+  display:flex;flex-direction:column;position:sticky;top:0;height:100vh;
+}
+.brand{display:flex;align-items:center;gap:9px;padding:6px 10px 16px;font-size:19px;font-weight:800;letter-spacing:-.3px}
+.brand .mark{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#ff6fcf,#7c5cff);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:14px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav .grp{font-size:11px;color:var(--muted);padding:14px 12px 6px;font-weight:600;letter-spacing:.06em}
+.nav button{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;font-size:14px;color:#3a3747;text-align:left}
+.nav button .ic{width:20px;text-align:center;font-size:15px}
+.nav button.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.nav button:not(.active):hover{background:#f5f3fb}
+.nav .chev{font-size:11px}
+.side-foot{margin-top:auto;padding:12px;font-size:12px;color:var(--muted);border-top:1px solid var(--border);line-height:1.4}
+
+/* Main */
+.main{flex:1;min-width:0;padding:0 22px 50px}
+.topbar{display:flex;align-items:center;justify-content:flex-end;gap:16px;padding:16px 4px;font-size:14px;position:sticky;top:0;background:var(--bg);z-index:20}
+.topbar .cred{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);padding:7px 12px;border-radius:999px;color:var(--accent);font-weight:700}
+.topbar .sub{color:var(--accent);font-weight:600}
+.topbar .icon{background:#fff;border:1px solid var(--border);width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
+.topbar .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#ff6fcf,#7c5cff);color:#fff;font-weight:700;font-size:13px;display:inline-flex;align-items:center;justify-content:center}
+
+.center{max-width:860px;margin:6px auto 0;text-align:center}
+h1.hero{font-size:clamp(28px,5vw,46px);font-family:Georgia,"Times New Roman",serif;font-weight:700;color:#141218;letter-spacing:-1px;margin:18px 0 6px}
+.center .hint{color:var(--muted);font-size:14px;margin:0 0 22px}
+
+/* Prompt bar */
+.prompt-card{
+  background:var(--card);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);
+  max-width:760px;margin:0 auto;padding:16px 18px;text-align:left;
+}
+.prompt-card textarea{width:100%;border:none;outline:none;resize:none;font-size:15px;min-height:52px;background:none}
+.prompt-card textarea::placeholder{color:#b6b1c9}
+.pbar{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--border);padding-top:10px;margin-top:4px}
+.tools-left{display:flex;gap:4px;align-items:center}
+.tcircle{width:34px;height:34px;border-radius:50%;background:var(--pill);display:inline-flex;align-items:center;justify-content:center;font-size:15px;color:#6a6480}
+.badge{font-size:12px;color:var(--muted);background:var(--pill);border-radius:999px;padding:5px 10px}
+.send{width:42px;height:42px;border-radius:50%;background:#141218;color:#fff;font-size:18px;display:inline-flex;align-items:center;justify-content:center;transition:.15s}
+.send:hover{background:var(--accent)}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:16px 0 34px}
+.chip{font-size:13px;color:#5b566b;background:var(--card);border:1px solid var(--border);border-radius:999px;padding:8px 14px;display:inline-flex;align-items:center;gap:6px;transition:.14s}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip .arr{font-size:12px}
+
+.sec{max-width:860px;margin:0 auto}
+.sec-h{font-size:15px;font-weight:700;color:#2a2636;margin:40px 0 14px;display:flex;align-items:center;gap:8px}
+.sec-h .more{margin-left:auto;font-weight:600;color:var(--muted);font-size:13px}
+
+/* popular tools */
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tool-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;align-items:center;gap:11px;text-align:left;transition:.15s}
+.tool-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow)}
+.tool-ic{width:44px;height:44px;border-radius:12px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
+.tool-t{font-size:14px;font-weight:600}
+
+/* studio panel */
+.panel{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:22px;box-shadow:var(--shadow)}
+.ptabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.ptab{padding:9px 15px;border-radius:999px;background:var(--pill);font-size:13px;color:#5b566b;font-weight:600}
+.ptab.active{background:var(--accent);color:#fff}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:7px}
+.inp{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:12px 14px;font-size:14px;outline:none}
+.inp:focus{border-color:var(--accent);background:#fff}
+select.inp{width:auto}
+.gen-btn{background:#141218;color:#fff;font-weight:600;padding:12px 22px;border-radius:999px;font-size:14px;display:inline-flex;align-items:center;gap:8px}
+.gen-btn:hover{background:var(--accent)}
+.err{color:#e5484d;font-size:13px;margin-top:8px}
+.out{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}
+.tile{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--border);background:#eee;min-height:160px}
+.tile.loading{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
+.tile img{width:100%;height:100%;object-fit:cover;display:block}
+.tile .num{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.5);color:#fff;font-size:11px;padding:3px 8px;border-radius:999px}
+.stream{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:14px 16px;white-space:pre-wrap;line-height:1.6;font-size:14px;margin-top:16px}
+.ad-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px;align-items:start}
+.ad-img{border-radius:14px;overflow:hidden;border:1px solid var(--border);aspect-ratio:1;background:#eee;position:relative}
+.ad-img img{width:100%;height:100%;object-fit:cover}
+.ad-copy h3{font-family:Georgia,serif;font-size:22px;margin:0 0 6px}
+.ad-copy .cta{display:inline-block;margin-top:12px;background:var(--accent);padding:9px 16px;border-radius:999px;color:#fff;font-weight:600}
+.ad-copy .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.ad-copy .tags span{font-size:12px;color:var(--accent);background:var(--accent-soft);padding:5px 10px;border-radius:99px}
+.pill-copy{margin-top:8px;color:#4a445c;font-size:14px;line-height:1.5}
+
+/* featured + library */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.fcard{border-radius:16px;overflow:hidden;border:1px solid var(--border);background:#fff;position:relative;cursor:pointer;box-shadow:var(--shadow)}
+.fcard img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.fcard .ft{position:absolute;left:0;right:0;bottom:0;padding:18px 12px 10px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.72));font-size:13px;font-weight:600}
+.fcard .fa{font-size:11px;color:#ddd;font-weight:400}
+.fcard .tag{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.5);color:#fff;font-size:10px;padding:3px 8px;border-radius:99px}
+.libcard{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--border);aspect-ratio:4/5;background:#eee;cursor:pointer}
+.libcard img{width:100%;height:100%;object-fit:cover}
+.libcard .del{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;font-size:13px;opacity:0;transition:.15s}
+.libcard:hover .del{opacity:1}
+.empty{color:var(--muted);text-align:center;padding:34px;border:1px dashed var(--border2);border-radius:16px;background:#fff}
+
+footer.site{max-width:860px;margin:44px auto 0;color:var(--muted);font-size:12px;text-align:center;border-top:1px solid var(--border);padding-top:20px}
+
+#modalCtn{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+#modalCtn.open{display:flex}
+#settingsCtn{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+#settingsCtn.open{display:flex}
+#modalCtn .backdrop{position:absolute;inset:0;background:rgba(20,15,40,.5)}
+.mcard{position:relative;background:#fff;border-radius:18px;max-width:760px;width:100%;max-height:88vh;overflow:auto;padding:20px;box-shadow:0 30px 80px rgba(20,15,40,.3)}
+.mimgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.mimgs img{width:100%;border-radius:12px;border:1px solid var(--border)}
+.mcard .mprompt{color:var(--muted);font-size:13px;margin:8px 0 4px}
+.mcard .mtool{color:var(--accent);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.mcard .mclose{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;background:#eee;font-size:16px;z-index:3}
+.mcard .dbtn{margin-top:14px;background:var(--pill);border:1px solid var(--border);padding:9px 16px;border-radius:999px;font-size:13px;font-weight:600}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#141218;color:#fff;padding:12px 20px;border-radius:999px;z-index:200;opacity:0;pointer-events:none;transition:.25s;font-size:13px}
+#toast.show{opacity:1}
+
+/* integrations */
+.int-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:14px;margin-top:10px}
+.int-head{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
+.int-dot{width:8px;height:8px;border-radius:50%;background:#b9b2cc;flex:none}
+.int-dot.ok{background:#2fbf71}
+.int-dot.bad{background:#e5484d}
+.int-sub{font-size:12px;color:var(--muted);margin:4px 0 8px;line-height:1.45}
+.int-row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.int-row .inp{flex:1;min-width:140px}
+.int-btn{background:#fff;border:1px solid var(--border2);border-radius:10px;padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap}
+.int-btn.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+.int-btn:disabled{opacity:.55;cursor:default}
+.int-msg{font-size:12px;color:var(--muted);margin-top:8px}
+.int-msg.ok{color:#2fbf71}
+.int-msg.bad{color:#e5484d}
+.int-lbl{font-size:11px;font-weight:700;color:var(--muted);margin:10px 0 4px}
+.cred-buy{background:var(--accent-soft);color:var(--accent);font-weight:700;border-radius:999px;padding:7px 12px;font-size:13px;border:1px solid transparent;white-space:nowrap}
+.cred-buy:hover{border-color:var(--accent)}
+#supaSql{resize:vertical;font-family:ui-monospace,Menlo,monospace;font-size:11px;white-space:pre}
+.libcard .pub{right:40px}
+.macts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.dbtn.danger{color:#e5484d}
+.share-box{margin-top:14px;background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:12px}
+.share-box .share-qr{width:140px;height:140px;border-radius:10px;border:1px solid var(--border);margin-top:8px;background:#fff}
+
+/* settings + video */
+.switch{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:12px 4px;border-bottom:1px solid var(--border)}
+.switch .sw-label{font-size:14px;font-weight:600}
+.switch .sw-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.tgle{width:46px;height:26px;border-radius:999px;background:#dfdbe9;position:relative;transition:.18s;flex:none}
+.tgle.on{background:var(--accent)}
+.tgle .knob{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.18s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.tgle.on .knob{left:23px}
+.video-player{background:#0d0b12;border-radius:16px;overflow:hidden;position:relative;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:#fff;min-height:200px}
+.video-player .vp-stage{position:absolute;inset:0;overflow:hidden}
+.video-player .vp-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.05)}
+.video-player .vp-stage img.on{opacity:1}
+.video-player .vp-stage img.ken{animation:ken 2.4s ease-in-out forwards}
+@keyframes ken{from{transform:scale(1.1)}to{transform:scale(1.02)}}
+.vp-bar{position:absolute;bottom:0;left:0;right:0;height:4px;background:rgba(255,255,255,.2)}
+.vp-bar i{display:block;height:100%;width:0;background:var(--accent2,#ff7ad9)}
+.vp-ctl{position:absolute;top:10px;left:12px;right:12px;display:flex;gap:6px;z-index:3;justify-content:space-between;color:#fff}
+.vp-chip{background:rgba(0,0,0,.45);font-size:12px;padding:5px 10px;border-radius:999px}
+.vp-play{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center}
+.vp-play .big{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.9);color:#141218;font-size:24px;display:flex;align-items:center;justify-content:center}
+.scriptline{font-size:13px;color:#4a445c;line-height:1.5} 
+
+.burger{display:none}
+@media(max-width:820px){
+  .side{position:fixed;left:-260px;transition:.25s;z-index:60;box-shadow:0 0 40px rgba(20,15,40,.2)}
+  .side.open{left:0}
+  .burger{display:inline-flex}
+  .main{padding:0 14px 40px}
+  .out{grid-template-columns:1fr 1fr}
+}
+</style>
+
+<div class="sub-banner" id="subBanner">Subscribe now to unlock all powerful AI features and trending templates <span class="subbtn" onclick="PIPPIT.openSubscribe()">Subscribe now</span><button class="x" onclick="this.parentElement.remove()">✕</button></div>
+
+<div class="layout">
+  <aside class="side" id="side">
+    <div class="brand"><span class="mark">✦</span> Surge.AI</div>
+    <nav class="nav" id="nav">
+      <button data-view="home" class="nav-active"><span class="ic">⌂</span> Home</button>
+      <button data-view="story"><span class="ic">📖</span> Story Studio</button>
+      <button data-view="assets"><span class="ic">🗂</span> Assets</button>
+      <button data-view="smart"><span class="ic">✨</span> Smart creation</button>
+      <div class="grp">Linear editor</div>
+      <button data-view="home" data-tool="video"><span class="ic">🎬</span> Video <span class="chev" style="margin-left:auto">▸</span></button>
+      <button data-view="home" data-tool="avatar"><span class="ic">👤</span> Avatars &amp; voices</button>
+      <button data-view="home" data-tool="image"><span class="ic">🎨</span> Image <span class="chev" style="margin-left:auto">▸</span></button>
+      <button data-view="publisher"><span class="ic">📈</span> Publisher</button>
+    </nav>
+    <div class="side-foot">
+      <div style="font-weight:600;color:#3a3747;margin-bottom:4px">Recent ideas</div>
+      Sunset latte brand<br>Moonlit fox film<br>Summer sale ad
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <button class="burger" onclick="$('side').classList.toggle('open')">☰</button>
+      <span class="sub" onclick="PIPPIT.openSubscribe()" style="cursor:pointer">Subscribe</span>
+      <span class="cred">✦ <b id="credEl">80</b></span>
+      <button class="cred-buy" onclick="PIPPIT.buyCredits()">✦ Buy credits</button>
+      <span class="icon" onclick="openSettings()" title="Settings">⚙</span>
+      <span class="icon">🔔</span>
+      <span class="avatar">Y</span>
+    </div>
+
+    <section id="viewHome">
+    <div class="center">
+      <h1 class="hero">Turn any idea into content.</h1>
+      <p class="hint">Type a rough idea — Surge.AI polishes the prompt and crafts the creative for you.</p>
+      <div class="prompt-card">
+        <textarea id="heroPrompt" placeholder="Type a rough idea… e.g. a fluffy cat doing a graceful dive at the Olympics"></textarea>
+        <div class="pbar">
+          <div class="tools-left">
+            <button class="tcircle">＋</button><button class="tcircle">@</button><button class="tcircle">✨</button><span class="badge">9:16</span>
+          </div>
+          <button class="send" id="heroGo" title="Generate">↑</button>
+        </div>
+      </div>
+      <div class="chips" id="quickChips"></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h">Popular tools</div>
+      <div class="tools">
+        <button class="tool-card" data-tool="image"><span class="tool-ic">🎬</span><span class="tool-t">Image studio</span></button>
+        <button class="tool-card" data-tool="avatar"><span class="tool-ic">👤</span><span class="tool-t">Digital avatar</span></button>
+        <button class="tool-card" data-tool="ad"><span class="tool-ic">📣</span><span class="tool-t">Ad creative</span></button>
+        <button class="tool-card" data-tool="video"><span class="tool-ic">▶</span><span class="tool-t">Full video</span></button>
+        <button class="tool-card" data-tool="storyboard"><span class="tool-ic">🎬</span><span class="tool-t">Storyboard</span></button>
+      </div>
+    </div>
+
+    <div class="sec panel" style="margin-top:24px" id="studioPanel">
+      <div class="ptabs">
+        <button class="ptab active" data-tool="image">🎨 Image</button>
+        <button class="ptab" data-tool="avatar">👤 Avatar</button>
+        <button class="ptab" data-tool="ad">📣 Ad</button>
+        <button class="ptab" data-tool="video">▶ Video</button>
+        <button class="ptab" data-tool="storyboard">🎬 Storyboard</button>
+      </div>
+
+      <div id="toolImage">
+        <div class="field"><label>What should it show?</label>
+          <textarea class="inp" id="imgPrompt" rows="4" placeholder="e.g. a neon-lit rainy cyberpunk alley with a glowing umbrella shop"></textarea>
+        </div>
+        <div class="field"><label>Style</label>
+          <select class="inp" id="imgStyle">
+            <option>Photo-realistic</option><option>3D animated</option><option>Anime</option><option>Oil painting</option><option>Cinematic</option><option>Retro poster</option>
+          </select>
+        </div>
+        <button class="gen-btn" id="imgGo">✦ Generate 4 images</button>
+        <div class="err" id="imgErr"></div>
+        <div class="out" id="imgOut"></div>
+      </div>
+
+      <div id="toolAvatar" style="display:none">
+        <div class="field"><label>Describe the avatar</label>
+          <textarea class="inp" id="avPrompt" rows="4" placeholder="e.g. a confident young woman with a wolf cut and a leather jacket"></textarea>
+        </div>
+        <div class="field"><label>Look</label>
+          <select class="inp" id="avLook">
+            <option>3D animated</option><option>Photoreal portrait</option><option>Anime</option><option>Pixar style</option>
+          </select>
+        </div>
+        <button class="gen-btn" id="avGo">✦ Generate avatars</button>
+        <div class="err" id="avErr"></div>
+        <div class="out" id="avOut"></div>
+
+        <div style="border-top:1px solid var(--border);margin-top:20px;padding-top:18px">
+          <div class="field"><label>🗣 Voice (text-to-speech)</label>
+            <textarea class="inp" id="voiceText" rows="2" placeholder="e.g. Hey there — I'm your studio assistant. What shall we dream up today?"></textarea>
+          </div>
+          <div class="field"><label>Voice</label>
+            <select class="inp" id="voicePick" style="max-width:100%"></select>
+          </div>
+          <div class="int-row">
+            <button class="gen-btn" id="voiceGo">🗣 Generate speech</button>
+            <button class="int-btn" id="voiceStop">■ Stop</button>
+          </div>
+          <div class="err" id="voiceErr"></div>
+          <div class="stream" id="voiceOut" style="display:none"></div>
+        </div>
+      </div>
+
+      <div id="toolAd" style="display:none">
+        <div class="field"><label>Product / business</label>
+          <input class="inp" id="adProduct" placeholder="e.g. a creamy oat-milk latte in a limited-edition sunrise can" style="width:100%">
+        </div>
+        <div class="field"><label>Target audience (optional)</label>
+          <input class="inp" id="adAudience" placeholder="e.g. busy students who want a quick breakfast" style="width:100%">
+        </div>
+        <button class="gen-btn" id="adGo">✦ Write my ad</button>
+        <div class="err" id="adErr"></div>
+        <div class="ad-grid" id="adOutput"></div>
+      </div>
+
+      <div id="toolStoryboard" style="display:none">
+        <div class="field"><label>Describe your video scene</label>
+          <textarea class="inp" id="sbPrompt" rows="4" placeholder="e.g. a fox sneaks through a neon forest at midnight"></textarea>
+        </div>
+        <div class="field"><label>Mood</label>
+          <select class="inp" id="sbMood">
+            <option>Cinematic</option><option>Whimsical</option><option>Noir</option><option>Adventure</option>
+          </select>
+        </div>
+        <button class="gen-btn" id="sbGo">✦ Build storyboard</button>
+        <div class="err" id="sbErr"></div>
+        <div class="out" id="sbOut"></div>
+        <div class="stream" id="sbSyn" hidden></div>
+      </div>
+
+      <div id="toolVideo" style="display:none">
+        <div class="field"><label>Describe your video idea</label>
+          <textarea class="inp" id="vidPrompt" rows="3" placeholder="e.g. a traveler's sunrise journey through the highlands"></textarea>
+        </div>
+        <div class="field"><label>Style</label>
+          <select class="inp" id="vidStyle">
+            <option>Cinematic</option><option>Whimsical</option><option>Noir</option><option>Adventure</option>
+          </select>
+        </div>
+        <button class="gen-btn" id="vidGo">▶ Generate full video</button>
+        <div class="err" id="vidErr"></div>
+        <div class="video-player" id="vidPlayer" hidden></div>
+        <div class="stream" id="vidScript" hidden></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h">Featured works <span class="more">See all →</span></div>
+      <div class="out" id="featured"></div>
+    </div>
+
+    <div class="sec" id="commSec" hidden>
+      <div class="sec-h">Community gallery <span class="more">Latest from creators →</span></div>
+      <div class="grid" id="commGrid"></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h">My creations</div>
+      <div class="out" id="libGrid"></div>
+    </div>
+    </section>
+
+    <section id="viewStory" hidden>
+      <div class="sec">
+        <div class="sec-h" style="margin-top:6px">📖 Story Studio</div>
+        <div class="panel">
+          <p style="color:var(--muted);font-size:14px;margin-top:0">Give Surge.AI a premise and it writes a complete story, then illustrates a cover for it.</p>
+          <div class="field"><label>What's your story premise?</label>
+            <textarea class="inp" id="storyPremise" rows="3" placeholder="e.g. a lighthouse keeper who finds a message in a bottle addressed to her — from a future she never reached"></textarea>
+          </div>
+          <div class="field"><label>Genre</label>
+            <select class="inp" id="storyGenre">
+              <option>Fantasy</option><option>Sci-fi</option><option>Romance</option><option>Mystery</option><option>Horror</option><option>Adventure</option><option>Children's</option>
+            </select>
+          </div>
+          <button class="gen-btn" id="storyGo">✦ Write my story</button>
+          <div class="err" id="storyErr"></div>
+          <div class="stream" id="storyBody" style="display:none"></div>
+          <div id="storyImgs"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="viewAssets" hidden>
+      <div class="sec">
+        <div class="sec-h" style="margin-top:6px">🗂 Assets</div>
+        <div class="field"><input class="inp" id="assetSearch" placeholder="🔍 Search your assets…"></div>
+        <div class="ptabs" id="assetTabs" style="margin-bottom:14px">
+          <button class="ptab active" data-f="all">All</button><button class="ptab" data-f="image">image</button><button class="ptab" data-f="avatar">avatar</button><button class="ptab" data-f="ad">ad</button><button class="ptab" data-f="video">video</button><button class="ptab" data-f="storyboard">storyboard</button><button class="ptab" data-f="story">story</button><button class="ptab" data-f="audio">audio</button>
+        </div>
+        <div class="out" id="assetGrid"></div>
+      </div>
+    </section>
+
+    <section id="viewSmart" hidden>
+      <div class="sec">
+        <div class="sec-h" style="margin-top:6px">✨ Smart creation</div>
+        <div class="panel">
+          <p style="color:var(--muted);font-size:14px;margin-top:0">Tell Surge.AI what you want to make and it picks the right tool and tunes the prompt for you.</p>
+          <div class="field"><label>What are you creating?</label>
+            <select class="inp" id="smartGoal">
+              <option value="image">🎨 An image</option>
+              <option value="avatar">👤 An avatar</option>
+              <option value="ad">📣 An ad</option>
+              <option value="video">▶ A video</option>
+              <option value="story">📖 A story</option>
+              <option value="voice">🗣 A voice / spoken line</option>
+            </select>
+          </div>
+          <div class="field"><label>Describe it in your own words</label>
+            <textarea class="inp" id="smartIdea" rows="4" placeholder="e.g. a confident fox detective in a rainy neon city"></textarea>
+          </div>
+          <button class="gen-btn" id="smartGo">✨ Smart generate</button>
+          <div class="err" id="smartErr"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="viewPublisher" hidden>
+      <div class="sec">
+        <div class="sec-h" style="margin-top:6px">📈 Publisher</div>
+        <div class="panel" style="margin-bottom:16px">
+          <div class="int-lbl">Your published content</div>
+          <div id="pubList"></div>
+          <div class="int-msg" id="pubMsg">Your creations published to the community gallery appear here. Publish with the 🌍 button on any library card.</div>
+        </div>
+        <div class="panel" style="margin-bottom:16px">
+          <div class="int-lbl">Library stats</div>
+          <div id="pubStats" style="display:flex;flex-wrap:wrap;gap:10px"></div>
+        </div>
+        <div class="panel">
+          <div class="int-lbl">Content planner — ideas to make next</div>
+          <div class="int-row"><input class="inp" id="planAdd" placeholder="Add an idea…"><button class="int-btn pri" id="planGo">Add</button></div>
+          <div id="planList" style="margin-top:10px"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site">✦ Surge.AI — an AI creative agent built with Perchance. Text-to-video is simulated with generated storyboard frames.</footer>
+  </main>
+</div>
+
+<div id="modalCtn"><div class="backdrop" onclick="closeModal()"></div>
+  <div class="mcard">
+    <button class="mclose" onclick="closeModal()">✕</button>
+    <div class="mtool" id="mTool"></div>
+    <p class="mprompt" id="mPrompt"></p>
+    <div class="mimgs" id="mImgs"></div>
+    <div class="macts">
+      <button class="dbtn" id="mShare">🔗 Share</button>
+      <button class="dbtn" id="mPub">🌍 Publish</button>
+      <button class="dbtn" id="mDl">⬇ Download</button>
+      <button class="dbtn danger" id="mDel">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div id="settingsCtn" class="modal-c"><div class="mcard" style="max-width:520px">
+  <button class="mclose" onclick="closeSettings()">✕</button>
+  <div style="font-size:22px;font-weight:700;margin-bottom:4px">Settings</div>
+  <div style="color:var(--muted);font-size:13px;margin-bottom:12px">Integrations &amp; generation options. Changes save automatically.</div>
+
+  <div style="font-weight:700;margin:10px 0 2px">Integrations</div>
+  <div id="setIntegrations"></div>
+
+  <div style="font-weight:700;margin:18px 0 8px">Full video generation</div>
+  <div class="field"><label>Clip duration</label>
+    <select class="inp" id="setDur">
+      <option value="4">4 seconds (5 frames)</option>
+      <option value="6">6 seconds (7 frames)</option>
+      <option value="10">10 seconds (11 frames)</option>
+    </select>
+  </div>
+  <div class="field"><label>Video resolution</label>
+    <select class="inp" id="setRes">
+      <option value="768x768">Square</option>
+      <option value="768x432">Widescreen (16:9)</option>
+    </select>
+  </div>
+  <div class="field"><label>AI story director (writes your script)</label>
+    <select class="inp" id="setScript">
+      <option value="on">On — write a full script</option>
+      <option value="off">Off — frames only</option>
+    </select>
+  </div>
+
+  <div style="font-weight:700;margin:18px 0 2px">Cloud library · Supabase</div>
+  <div class="int-card">
+    <div class="int-head"><span class="int-dot" id="supaDot"></span> Supabase <span style="font-size:12px;color:var(--muted);font-weight:400" id="supaState">not configured</span></div>
+    <div class="int-sub">Sync your creations to a free Supabase Postgres table so your library follows you across devices. Your URL and <b>anon public key</b> are meant to be exposed — the database is locked down with Row Level Security. In Supabase: turn on <b>Authentication → Sign In / Up → Anonymous</b>, then run the SQL below once.</div>
+    <div class="int-row"><input class="inp" id="supaUrl" placeholder="https://xxxx.supabase.co"></div>
+    <div class="int-row"><input class="inp" id="supaKey" placeholder="anon public key (sb_publishable_…)" type="password"></div>
+    <div class="int-lbl">One-time setup — paste this into Supabase → SQL editor:</div>
+    <textarea class="inp" id="supaSql" rows="7" readonly></textarea>
+    <div class="int-row">
+      <button class="int-btn pri" id="supaSave">Save &amp; connect</button>
+      <button class="int-btn" id="supaTest">Test</button>
+      <button class="int-btn" id="supaCopy">Copy SQL</button>
+      <button class="int-btn" id="supaSync">Sync now</button>
+    </div>
+    <div class="int-msg" id="supaMsg"></div>
+    <div class="int-lbl">Optional: sign in with email to keep your library on any device.</div>
+    <div class="int-row"><input class="inp" id="supaEmail" placeholder="email"><input class="inp" id="supaPass" placeholder="password" type="password"><button class="int-btn pri" id="supaSignin">Sign in</button><button class="int-btn" id="supaSignup">Sign up</button></div>
+    <div style="font-size:12px;color:var(--muted);margin-top:8px" id="supaUser"></div>
+    <div class="int-row"><button class="int-btn" id="supaGoogle">Continue with Google</button></div>
+  </div>
+
+  <div style="font-weight:700;margin:18px 0 2px">Community &amp; sharing</div>
+  <div class="int-card">
+    <div class="int-head"><span class="int-dot" id="commDot"></span> Community gallery <span style="font-size:12px;color:var(--muted);font-weight:400">needs Supabase</span></div>
+    <div class="int-sub">With Supabase connected, the 🌍 button on a library card publishes the creation to a public gallery on the Home page. Anyone can view; only you can unpublish. The Share button in a creation's viewer makes a public link + QR code via Perchance's file hosting — no setup needed.</div>
+    <div id="setCommunity"></div>
+  </div>
+
+  <div style="font-weight:700;margin:18px 0 2px">Notifications · Webhook</div>
+  <div class="int-card">
+    <div class="int-head"><span class="int-dot" id="whDot"></span> Webhook <span style="font-size:12px;color:var(--muted);font-weight:400" id="whState">not configured</span></div>
+    <div class="int-sub"><b>Warning:</b> a webhook URL is a secret — anyone who knows it can post to your channel. It's stored only in this browser and never shipped in the generator source. Works with Discord, Slack, n8n, Zapier, Make, etc.</div>
+    <div class="int-lbl">Webhook URL</div>
+    <div class="int-row"><input class="inp" id="whUrl" type="password" placeholder="https://discord.com/api/webhooks/…"></div>
+    <div class="int-row"><button class="int-btn pri" id="whSave">Save</button><button class="int-btn" id="whTest">Send test</button></div>
+    <div class="int-msg" id="whMsg">On every creation a JSON payload is POSTed here: \{event, tool, prompt, urls, time, generator\}.</div>
+  </div>
+
+  <div style="font-weight:700;margin:18px 0 2px">Analytics · Umami</div>
+  <div class="int-card">
+    <div class="int-head"><span class="int-dot" id="umiDot"></span> Umami <span style="font-size:12px;color:var(--muted);font-weight:400" id="umiState">not configured</span></div>
+    <div class="int-sub">Privacy-friendly, cookie-free analytics. Create a site at umami.is (free tier), paste its Website-ID and optionally your own instance URL.</div>
+    <div class="int-lbl">Instance URL (default cloud.umami.is)</div>
+    <div class="int-row"><input class="inp" id="umiUrl" placeholder="https://cloud.umami.is"></div>
+    <div class="int-lbl">Website ID</div>
+    <div class="int-row"><input class="inp" id="umiId" placeholder="your-website-id"></div>
+    <div class="int-row"><button class="int-btn pri" id="umiSave">Save &amp; enable</button></div>
+    <div class="int-msg" id="umiMsg"></div>
+  </div>
+
+  <div style="font-weight:700;margin:18px 0 2px">GitHub</div>
+  <div class="int-card">
+    <div class="int-head"><span class="int-dot" id="ghDot"></span> GitHub <span style="font-size:12px;color:var(--muted);font-weight:400" id="ghState">not connected</span></div>
+    <div class="int-sub"><b>Security:</b> paste a GitHub <b>Personal Access Token</b> (it's used only in this browser, never shipped in the generator source) to list, pick or create a repository and push your library as <span class="int-lbl" style="margin:0;display:inline">surge-creations.json</span>.<br><br><b>If you see “Resource not accessible by personal access token”,</b> your token lacks permission. Best: make a <b>classic</b> token (GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)) and tick the <b>repo</b> scope (plus <b>read:user</b>). Fine-grained tokens need repository access with <i>Contents: Read and write</i> (to push) and <i>Administration: Read and write</i> (to create repos).</div>
+    <div class="int-lbl">Personal Access Token (repo scope)</div>
+    <div class="int-row"><input class="inp" id="ghToken" type="password" placeholder="github_pat_... or ghp_..."></div>
+    <div class="int-row"><button class="int-btn pri" id="ghConnect">Connect</button></div>
+    <div id="ghBody" style="display:none">
+      <div class="int-lbl">Connected as <b id="ghUser"></b></div>
+      <div class="int-lbl">Repository</div>
+      <div class="int-row"><select class="inp" id="ghRepo" style="flex:1;min-width:140px"></select><button class="int-btn" id="ghRefresh">⟳ Refresh</button></div>
+      <div class="int-lbl">Or create a new repository</div>
+      <div class="int-row"><input class="inp" id="ghName" placeholder="new-repo-name" style="flex:1"><select class="inp" id="ghPrivate"><option value="true">Private</option><option value="false">Public</option></select><button class="int-btn" id="ghCreate">＋ Create</button></div>
+      <div class="int-row" style="margin-top:14px"><button class="int-btn pri" id="ghSync">⬆ Push full app to GitHub</button></div>
+      <div class="int-sub" style="margin-top:6px">Pushes the whole project — index.html, main.pjs and src/ — so your repository is a complete copy of this app. Note: logs, credits and created assets are kept locally and are not uploaded.</div>
+    </div>
+    <div class="int-msg" id="ghMsg"></div>
+  </div>
+
+  <div style="font-weight:700;margin:18px 0 2px">Payments · Stripe</div>
+  <div class="int-card">
+    <div class="int-head"><span class="int-dot" id="stripeDot"></span> Stripe <span style="font-size:12px;color:var(--muted);font-weight:400" id="stripeState">not configured</span></div>
+    <div class="int-sub">Sell credits with a Stripe <b>Payment Link</b>. Create one in your Stripe dashboard (one-time payment), paste it below, and set how many credits each purchase grants. Checkout opens in a new tab; the top bar <b>Buy credits</b> button uses it too.</div>
+    <div class="int-lbl">Payment link URL (one-time — powers Buy credits)</div>
+    <div class="int-row"><input class="inp" id="stripeUrl" placeholder="https://buy.stripe.com/xxxx"></div>
+    <div class="int-lbl">Credits per purchase</div>
+    <div class="int-row"><input class="inp" id="stripeCredits" type="number" value="200" min="1"></div>
+    <div class="int-lbl">Pro subscription Payment Link (optional — powers the Subscribe buttons)</div>
+    <div class="int-row"><input class="inp" id="stripeSubUrl" placeholder="https://buy.stripe.com/xxxx"></div>
+    <div class="int-row">
+      <button class="int-btn pri" id="stripeSave">Save</button>
+      <button class="int-btn" id="stripeOpen">Open checkout</button>
+      <button class="int-btn" id="stripeSubOpen">Open subscription</button>
+    </div>
+    <div class="int-msg" id="stripeMsg">Client-side checkout can't verify payment automatically — after paying, hit “I've paid” and the credits are added.</div>
+    <div class="int-row"><button class="int-btn" id="stripePaid">✓ I've paid — add credits</button></div>
+  </div>
+</div></div>
+<div id="toast"></div>
+
+<script src="src/app-source.js"></script>
+<script>
+window.$ = (id)=>document.getElementById(id);
+window.PIPPIT = (()=>{
+const NEG = "NSFW, nudity, text, watermark, logo, low quality, blurry";
+const STYLE_MAP = {
+  "Photo-realistic":"photo-realistic, high detail, professional photography",
+  "3D animated":"3D animated, glossy, stylized",
+  "Anime":"anime, detailed illustration",
+  "Oil painting":"oil painting, textured brushstrokes",
+  "Cinematic":"cinematic, dramatic lighting",
+  "Retro poster":"retro 80s movie poster style",
+  "Whimsical":"soft dreamy pastel colors",
+  "Noir":"gritty high contrast, film noir",
+  "Adventure":"vibrant saturated adventure",
+  "Pixar style":"pixar-style character render",
+};
+
+const FEATURED = [
+  ["The Ancient Gate","creators.ai","https://user.uploads.dev/file/5f03cc402806cadcf8444619d1f625b6.jpg"],
+  ["Moonlit Hatchling","ArcaneMint","https://user.uploads.dev/file/2de928b387c646cf2ac2df84a2bdf7f5.jpg"],
+  ["Neon Requiem","NOVA Studio","https://user.uploads.dev/file/83c0b741179fa141d329e4bc08c262c7.jpg"],
+  ["Morning Ritual","warmfolk","https://user.uploads.dev/file/4b2b70d72544768f4b4d3ef1c09aa69a.jpg"],
+  ["The Dream Heist","Orbit Doodles","https://user.uploads.dev/file/f494ab19234b1c822274379551d7059a.jpg"],
+  ["Last Light","Mx-Shell","https://user.uploads.dev/file/b989bf0387eb9ce5cf0b8fcdd991aa5d.jpg"],
+];
+
+function shownTool(){ return ["image","avatar","ad","storyboard"].find(t=>$(t==="image"?"toolImage":t==="avatar"?"toolAvatar":t==="ad"?"toolAd":"toolStoryboard").style.display!=="none")||"image"; }
+
+async function runImageBatch(promptText, count, style, aspect, container, errEl, tool){
+  container.innerHTML=""; errEl.textContent="";
+  for(let i=0;i<count;i++){
+    let t=document.createElement("div"); t.className="tile loading"; t.innerHTML='<span>✦ generating…</span>';
+    const n=document.createElement("div"); n.className="num"; n.textContent=String(i+1).padStart(2,"0"); t.appendChild(n);
+    container.appendChild(t);
+  }
+  const tiles=[...container.querySelectorAll(".tile")];
+  const urls=[];
+  const st = STYLE_MAP[style]||style;
+  try{
+    for(let i=0;i<count;i++){
+      let p = tool==="avatar" ? `Professional digital avatar: ${promptText} ${st}`
+            : tool==="storyboard" ? `${promptText} — storyboard frame ${i+1} of a short film${st&&st!==style?"":""} ${STYLE_MAP[style]||""}`
+            : `${promptText} ${st}`;
+      if(tool==="storyboard"){
+        const pack=["wide establishing shot of the whole scene","medium shot, closer detail, more motion","dramatic close-up, intense peak moment"];
+        p = `${promptText} — ${pack[i]}${STYLE_MAP[style]?" "+STYLE_MAP[style]:""}`;
+      } else if(tool==="image"){
+        p = `${promptText} ${st}`;
+      } else if(tool==="avatar"){
+        p = `Digital avatar of: ${promptText}. ${st}, expressive, high quality portrait`;
+      }
+      const res = await root.generateImage({prompt:p, resolution: "768x768", negativePrompt:NEG, hideGalleryButtons:true});
+      const img=document.createElement("img"); img.src=res.dataUrl;
+      tiles[i].className="tile"; tiles[i].innerHTML=''; tiles[i].appendChild(img);
+      const n=document.createElement("div"); n.className="num"; n.textContent=String(i+1).padStart(2,"0"); tiles[i].appendChild(n);
+      urls.push(res.dataUrl);
+    }
+  }catch(e){ errEl.textContent="Generation failed: "+(e&&e.message||e); }
+  return {urls};
+}
+
+async function makeAd(){
+  const product=$("adProduct").value.trim();
+  const audience=$("adAudience").value.trim();
+  const err=$("adErr"); err.textContent="";
+  if(!product){ err.textContent="Tell me your product first."; return; }
+  if(!(await gate(20))) return;
+  const out=$("adOutput");
+  out.innerHTML=`<div class="ad-img" style="display:flex;align-items:center;justify-content:center;color:var(--muted)">✦ generating…</div><div class="ad-copy"><div class="stream">✍ writing…</div></div>`;
+  const imgEl=out.querySelector(".ad-img"), copyEl=out.querySelector(".stream");
+  const p = (async()=>{
+    try{ const res=await root.generateImage({prompt:`Product hero shot: ${product}, premium advertising photography, vivid, studio lighting, commercial`,resolution:"768x768",negativePrompt:NEG,hideGalleryButtons:true}); imgEl.innerHTML=`<img src="${res.dataUrl}">`; return res.dataUrl; }catch(e){ imgEl.innerHTML='<div style="padding:12px;color:#e5484d;font-size:13px">image failed</div>'; return ""; }
+  })();
+  let text="";
+  try{
+    text = await root.generateText({instruction:`You are a brilliant marketing copywriter. Write a short social-media ad for: "${product}"${audience?` Targeting: ${audience}.`:""}
+Write it in exactly this format:
+HEADLINE: (one punchy headline, 5-8 words, no quotes)
+COPY: (2-3 benefit-driven sentences)
+CTA: (2-4 words)
+HASHTAGS: (5 hashtags on one line)`, onChunk:(d)=>{ copyEl.textContent=d.fullTextSoFar; }});
+  }catch(e){ copyEl.textContent="Text generation failed"; }
+  const url=await p;
+  const t=(text?.text||text||"");
+  const g=k=>{const m=t.match(new RegExp(k+"\\s*:\\s*([^\\n]+)"));return m?m[1].trim():"";};
+  out.innerHTML=`<div class="ad-img">${url?`<img src="${url}">`:'<div style="padding:12px;color:var(--muted)">unavailable</div>'}</div>
+  <div class="ad-copy"><h3>${g("HEADLINE")||"Your headline"}</h3><div class="pill-copy">${g("COPY")||""}</div><div class="cta">${g("CTA")||"Shop now"}</div><div class="tags">${(g("HASHTAGS")||"").split(/\s+/).filter(Boolean).map(x=>`<span>${x}</span>`).join("")}</div></div>`;
+  if(url||t) await spend(20);
+  saveLib({urls:url?[url]:[], prompt:`${product}`, tool:"ad"});
+}
+
+async function loadLib(){ return (await root.kv.creations.get("list"))||[]; }
+async function saveLib(item){
+  if(!item) return;
+  const list=await loadLib(); item.id="c"+Date.now()+Math.floor(Math.random()*1e4); item.time=Date.now();
+  if(SETTINGS.autosave!==false){
+    list.unshift(item); await root.kv.creations.set("list",list.slice(0,40)); renderLib();
+    let cloud=false, pub=false;
+    try{ cloud=await cloudPush([item]); }catch(e){}
+    if(SETTINGS.autoPub){ try{ pub=await publishItem(item); }catch(e){} }
+    sendWebhook(item);
+    toast("Saved to your library"+(cloud?" · synced to cloud":"")+(pub?" · published":""));
+  }
+}
+async function mergedLib(){
+  const local=await loadLib();
+  let list=local;
+  try{
+    const cloud=await cloudPull();
+    if(cloud&&cloud.length){ const seen=new Set(local.map(i=>i.id)); const add=cloud.filter(i=>!seen.has(i.id)); list=[...add,...local].sort((a,b)=>(b.time||0)-(a.time||0)).slice(0,80); if(add.length) await root.kv.creations.set("list",list.slice(0,40)); }
+  }catch(e){ console.error("cloud pull failed",e); }
+  return list;
+}
+function renderLib(){
+  const grid=$("libGrid");
+  mergedLib().then(list=>{
+    if(!list.length){ grid.innerHTML='<div class="empty">No creations yet. Generate something and it lands here.'+(SETTINGS.supa&&SETTINGS.supa.url?"  Sync it to the cloud via Settings → Cloud library.":"")+'</div>'; return; }
+    grid.innerHTML="";
+    list.forEach(it=>{
+      const c=document.createElement("div"); c.className="libcard";
+      if(it.urls&&it.urls.length){
+        c.innerHTML=`<img src="${it.urls[0]}"><span style="position:absolute;bottom:0;left:0;right:0;padding:18px 10px 8px;font-size:12px;background:linear-gradient(transparent,rgba(0,0,0,.6));color:#fff">${it.tool}${pubSet.has(it.id)?' · 🌍':""}</span>`;
+      } else if(it.tool==="audio"){
+        c.style.background="linear-gradient(135deg,#5a4bd6,#b06bff)";
+        c.innerHTML=`<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding:10px;text-align:center"><div style="font-size:30px">🎙</div><div style="font-size:12px;font-weight:600;margin-top:6px">${it.tool}${pubSet.has(it.id)?' · 🌍':""}</div><div style="font-size:11px;opacity:.85;max-height:34px;overflow:hidden">${(it.text||"").slice(0,60)}</div></div>`;
+      } else if(it.tool==="story"){
+        c.style.background="linear-gradient(135deg,#2b2f77,#6950c2)";
+        c.innerHTML=`<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding:10px;text-align:center"><div style="font-size:30px">📖</div><div style="font-size:12px;font-weight:600;margin-top:6px">${it.tool}${pubSet.has(it.id)?' · 🌍':""}</div><div style="font-size:11px;opacity:.85;max-height:34px;overflow:hidden">${(it.prompt||"").slice(0,60)}</div></div>`;
+      }
+      const d=document.createElement("button"); d.className="del"; d.textContent="✕"; d.title="Delete";
+      d.onclick=async(e)=>{e.stopPropagation(); await deleteItem(it.id);};
+      c.appendChild(d);
+      const p=document.createElement("button"); p.className="del pub"; p.textContent=pubSet.has(it.id)?"🌍✓":"🌍"; p.title=pubSet.has(it.id)?"Published — click to unpublish":"Publish to community";
+      p.onclick=async(e)=>{ e.stopPropagation(); try{ if(pubSet.has(it.id)) await unpublishItem(it.id); else await publishItem(it); }catch(err){ toast(err.message||"Publish failed — connect Supabase in Settings"); } };
+      c.appendChild(p);
+      c.onclick=()=>showItem(it);
+      grid.appendChild(c);
+    });
+  });
+}
+async function deleteItem(id){
+  const list=await loadLib(); await root.kv.creations.set("list",list.filter(x=>x.id!==id));
+  try{ const c=await ensureSupa(); const user=c&&(await c.auth.getUser()).data.user; if(c&&user) await c.from("creations").delete().eq("id",id).eq("user_id",user.id); }catch(e){}
+  renderLib();
+}
+
+/* ---- Community gallery ---- */
+let pubSet=new Set();
+let commRows=[];
+async function loadPubSet(){ try{ pubSet=new Set(await root.kv.community.get("mine")||[]); }catch(e){} }
+async function savePubSet(){ try{ await root.kv.community.set("mine",[...pubSet]); }catch(e){} }
+async function publishItem(it){
+  const c=await ensureSupa(); if(!c) throw new Error("Connect Supabase in Settings → Cloud library first.");
+  const u=await supaUser(); if(!u) throw new Error("Could not start a cloud session.");
+  const author=(u.email||"").split("@")[0]||"anonymous";
+  const {error}=await c.from("community").upsert({id:"p"+it.id,user_id:u.id,tool:it.tool,prompt:it.prompt,urls:it.urls,time:it.time,author});
+  if(error) throw error;
+  pubSet.add(it.id); await savePubSet(); renderLib(); renderCommunity(); toast("Published to the community"); return true;
+}
+async function unpublishItem(id){
+  const c=await ensureSupa(); const u=c&&await supaUser();
+  if(c&&u) await c.from("community").delete().eq("id","p"+id).eq("user_id",u.id);
+  pubSet.delete(id); await savePubSet(); renderLib(); renderCommunity(); toast("Removed from community");
+}
+async function renderCommunity(){
+  const grid=$("commGrid"), sec=$("commSec");
+  if(!grid||!sec) return;
+  const cfg=SETTINGS.supa&&SETTINGS.supa.url;
+  sec.hidden=!cfg;
+  if(!cfg){ return; }
+  try{
+    const c=await ensureSupa();
+    if(!c){ sec.hidden=true; return; }
+    const {data,error}=await c.from("community").select("*").order("time",{ascending:false}).limit(24);
+    if(error) throw error;
+    commRows=data||[];
+  }catch(e){ commRows=[]; }
+  if(!commRows.length){ grid.innerHTML='<div class="empty" style="grid-column:1/-1">Nothing here yet — publish a creation with the 🌍 button on a library card.</div>'; return; }
+  grid.innerHTML=commRows.map(r=>`<div class="fcard" onclick="PIPPIT.openCommunity('${r.id}')"><img src="${r.urls[0]}"><div class="ft">${r.tool||"art"}<div class="fa">by ${r.author||"anonymous"}</div></div></div>`).join("");
+}
+
+/* ---- Viewer actions: share / download ---- */
+function showItem(it){
+  $("mTool").textContent=it.tool; $("mPrompt").textContent=it.prompt||"";
+  if(it.urls&&it.urls.length){
+    $("mImgs").innerHTML=it.urls.map(u=>`<img src="${u}">`).join("");
+  } else if(it.tool==="audio"){
+    $("mImgs").innerHTML=`<div style="padding:20px;text-align:center;color:var(--muted)">🎙 Voice asset — press play to hear it.</div><button class="gen-btn" style="margin:0 auto;display:flex" id="mPlayVoice">🗣 Play</button>`;
+    $("mPlayVoice").onclick=()=>{ speak(it.text,it.voice); };
+  } else if(it.tool==="story"){
+    $("mImgs").innerHTML=`<div class="stream" style="white-space:pre-wrap">${(it.story||"").replace(/&/g,"&amp;").replace(/</g,"&lt;")}</div>`;
+  }
+  const shareBox=$("mImgs").nextElementSibling&&$("mImgs").nextElementSibling.classList.contains("share-box")?$("mImgs").nextElementSibling:null;
+  if(shareBox) shareBox.remove();
+  $("mDel").style.display=""; $("mDel").onclick=async()=>{await deleteItem(it.id); closeModal();};
+  $("mShare").style.display=""; $("mShare").onclick=()=>shareItem(it);
+  $("mDl").style.display=""; $("mDl").onclick=()=>downloadItem(it);
+  $("mPub").style.display=""; $("mPub").textContent=pubSet.has(it.id)?"🌍 Unpublish":"🌍 Publish";
+  $("mPub").onclick=async()=>{ try{ if(pubSet.has(it.id)) await unpublishItem(it.id); else await publishItem(it); showItem(it); }catch(err){ toast(err.message||"Failed"); } };
+  $("modalCtn").classList.add("open");
+}
+async function shareItem(it){
+  toast("Creating share link…");
+  try{
+    const name="c-"+it.id.replace(/[^a-z0-9]/g,"").toLowerCase().slice(0,64);
+    const created=await root.uploadPlugin.editable.set(name, JSON.stringify({tool:it.tool,prompt:it.prompt,urls:it.urls,time:it.time}));
+    if(created.error) throw new Error(created.error);
+    const url=`https://editable.uploads.dev/file/${window.generatorName}/${name}?v=${created.editCount||1}`;
+    const old=$("mImgs").nextElementSibling;
+    if(old&&old.classList.contains("share-box")) old.remove();
+    const box=document.createElement("div"); box.className="share-box";
+    box.innerHTML=`<div class="int-lbl">Share link</div>
+      <div class="int-row"><input class="inp" id="shareUrl" readonly value="${url}"><button class="int-btn" id="shareCopy">Copy</button></div>
+      <img class="share-qr" alt="QR" src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(url)}">
+      <div style="font-size:12px;color:var(--muted);margin-top:8px">Anyone with this link can view the creation. The QR code points to it too.</div>`;
+    $("mImgs").after(box);
+    $("shareCopy").onclick=async()=>{ try{ await navigator.clipboard.writeText(url); toast("Link copied"); }catch(e){ window.prompt("Copy this link:", url); } };
+    toast("Share link ready");
+  }catch(e){ toast("Share failed: "+(e.message||e)); }
+}
+function downloadItem(it){ it.urls.forEach((u,i)=>{ const a=document.createElement("a"); a.href=u; a.download=`surge-${it.tool||"art"}-${i+1}.png`; document.body.appendChild(a); a.click(); a.remove(); }); }
+
+/* ---- Webhooks ---- */
+async function sendWebhook(it){
+  const wh=SETTINGS.webhook; if(!wh||!wh.url) return;
+  try{
+    await root.superFetch(wh.url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({event:"creation",tool:it.tool,prompt:it.prompt,urls:it.urls,time:it.time,generator:window.generatorName})});
+  }catch(e){ console.error("webhook failed",e); }
+}
+
+/* ---- Analytics ---- */
+async function loadAnalytics(){
+  const a=SETTINGS.umami; if(!a||!a.id) return;
+  if(document.getElementById("umamiScript")) return;
+  const s=document.createElement("script"); s.id="umamiScript"; s.defer=true; s.async=true;
+  s.src=(a.url||"https://cloud.umami.is")+"/script.js"; s.setAttribute("data-website-id",a.id);
+  document.head.appendChild(s);
+}
+
+/* ---- Settings ---- */
+const SETTING_TOGGLES = [
+  ["AI image generator", "aiImg", "Power the image & avatar tools with the art model."],
+  ["AI ad writer", "aiAd", "Write your headline, copy, CTA and hashtags."],
+  ["AI story director", "aiScript", "Write a script for full videos."],
+  ["Autosave to library", "autosave", "Keep every creation in My creations."],
+  ["Motion (Ken Burns)", "kenburns", "Add gentle motion to video clips."],
+  ["Enforce credit limits", "creditGate", "Block generation when credits run out (pair with Stripe)."],
+];
+let SETTINGS = { aiImg:true, aiAd:true, aiScript:true, autosave:true, kenburns:true };
+async function loadSettings(){ try{ SETTINGS = Object.assign(SETTINGS, await root.kv.settings.get("s")||{}); }catch(e){} }
+async function saveSettings(partial){ Object.assign(SETTINGS, partial); try{ await root.kv.settings.set("s", SETTINGS); }catch(e){} }
+function renderSettings(){
+  $("setIntegrations").innerHTML = SETTING_TOGGLES.map(([label,key,desc])=>
+    `<div class="switch"><span><div class="sw-label">${label}</div><div style="font-size:12px;color:var(--muted)">${desc}</div></span>
+     <span class="sw" onclick="PIPPIT.toggle('${key}')" style="width:46px;height:26px;border-radius:999px;background:${SETTINGS[key]?'var(--accent)':'#d7d3e6'};position:relative;flex:none"><span style="position:absolute;top:3px;${SETTINGS[key]?'right:3px;background:#fff':'left:3px;background:#888'};width:20px;height:20px;border-radius:50%"></span></span></div>`).join("");
+  $("setDur").value = String(SETTINGS.dur||4);
+  $("setRes").value = SETTINGS.res||"768x768";
+  $("setScript").value = SETTINGS.script||"on";
+  renderSupaUI(); renderCredits(); renderGhUI();
+}
+window.openSettings = ()=>{ renderSettings(); $("settingsCtn").classList.add("open"); };
+window.closeSettings = ()=>{ $("settingsCtn").classList.remove("open"); };
+$("setDur").addEventListener("change", e=>{ saveSettings({dur:Number(e.target.value)||4}); });
+$("setRes").addEventListener("change", e=>{ saveSettings({res:e.target.value}); });
+$("setScript").addEventListener("change", e=>{ saveSettings({script:e.target.value}); });
+
+/* ---- Integrations: Supabase cloud library ---- */
+const SUPA_SQL = `-- Surge.AI cloud library — run once in Supabase (SQL editor).
+-- Also enable: Authentication -> Sign In / Up -> Anonymous (turn on).
+
+create table if not exists public.creations (
+  id text primary key,
+  user_id uuid default auth.uid(),
+  tool text,
+  prompt text,
+  urls jsonb default '[]',
+  time bigint
+);
+
+alter table public.creations enable row level security;
+
+grant select, insert, update, delete on public.creations to anon, authenticated;
+
+drop policy if exists "own select" on public.creations;
+create policy "own select" on public.creations for select using (auth.uid() = user_id);
+drop policy if exists "own insert" on public.creations;
+create policy "own insert" on public.creations for insert with check (auth.uid() = user_id);
+drop policy if exists "own update" on public.creations;
+create policy "own update" on public.creations for update using (auth.uid() = user_id);
+drop policy if exists "own delete" on public.creations;
+create policy "own delete" on public.creations for delete using (auth.uid() = user_id);
+
+-- Community gallery (public read, own write)
+create table if not exists public.community (
+  id text primary key,
+  user_id uuid default auth.uid(),
+  tool text,
+  prompt text,
+  urls jsonb default '[]',
+  time bigint,
+  author text default 'anonymous'
+);
+
+alter table public.community enable row level security;
+
+grant select, insert, update, delete on public.community to anon, authenticated;
+
+drop policy if exists "community read" on public.community;
+create policy "community read" on public.community for select using (true);
+drop policy if exists "community insert" on public.community;
+create policy "community insert" on public.community for insert with check (auth.uid() = user_id);
+drop policy if exists "community update" on public.community;
+create policy "community update" on public.community for update using (auth.uid() = user_id);
+drop policy if exists "community delete" on public.community;
+create policy "community delete" on public.community for delete using (auth.uid() = user_id);`;
+
+let supa=null;
+async function ensureSupa(){
+  if(supa) return supa;
+  const s=SETTINGS.supa;
+  if(!s||!s.url||!s.key) return null;
+  if(!window.supabaseJs) window.supabaseJs = await import("https://esm.sh/@supabase/supabase-js@2");
+  supa = window.supabaseJs.createClient(s.url, s.key, {auth:{persistSession:true, autoRefreshToken:true}});
+  return supa;
+}
+async function supaUser(){
+  const c=await ensureSupa(); if(!c) return null;
+  let {data:{user}}=await c.auth.getUser();
+  if(!user){ const r=await c.auth.signInAnonymously(); user=r.data.user; }
+  return user;
+}
+async function cloudPush(items){
+  const c=await ensureSupa(); if(!c) return 0;
+  const user=await supaUser(); if(!user) return 0;
+  const rows=items.map(it=>({id:it.id,user_id:user.id,tool:it.tool,prompt:it.prompt,urls:it.urls,time:it.time}));
+  const {error}=await c.from("creations").upsert(rows);
+  if(error) throw error;
+  return rows.length;
+}
+async function cloudPull(){
+  const c=await ensureSupa(); if(!c) return null;
+  const {data,error}=await c.from("creations").select("*").order("time",{ascending:false}).limit(80);
+  if(error) throw error;
+  return (data||[]).map(r=>({id:r.id,tool:r.tool,prompt:r.prompt,urls:r.urls||[],time:r.time}));
+}
+function updateSupaStatus(){
+  const s=SETTINGS.supa||{}; const dot=$("supaDot"), st=$("supaState");
+  if(!s.url||!s.key){ dot.className="int-dot"; st.textContent="not configured"; return; }
+  supaUser().then(u=>{ if(u){ dot.className="int-dot ok"; st.textContent=u.email?("connected · "+u.email):"connected · anonymous device"; } else { dot.className="int-dot bad"; st.textContent="connection failed"; } }).catch(()=>{ dot.className="int-dot bad"; st.textContent="connection failed"; });
+}
+async function renderSupaUser(){
+  const el=$("supaUser");
+  try{
+    const c=await ensureSupa();
+    if(!c){ el.textContent="Not configured — your library stays on this device."; return; }
+    const u=await supaUser();
+    el.textContent= u ? (u.email?`Signed in as ${u.email} — creations sync to the cloud.`:"Anonymous cloud session active — sign in with email to sync across devices.") : "Cloud unavailable.";
+  }catch(e){ el.textContent="Cloud unavailable."; }
+}
+function renderSupaUI(){
+  const s=SETTINGS.supa||{};
+  $("supaUrl").value=s.url||"";
+  $("supaKey").value=s.key||"";
+  $("supaSql").value=SUPA_SQL;
+  $("stripeUrl").value=(SETTINGS.stripe||{}).url||"";
+  $("stripeSubUrl").value=(SETTINGS.stripe||{}).subUrl||"";
+  $("stripeCredits").value=(SETTINGS.stripe||{}).credits||200;
+  $("whUrl").value=(SETTINGS.webhook||{}).url||"";
+  $("umiUrl").value=(SETTINGS.umami||{}).url||"";
+  $("umiId").value=(SETTINGS.umami||{}).id||"";
+  updateSupaStatus(); renderSupaUser(); updateStripeStatus(); updateWhStatus(); updateUmiStatus(); renderCommunityToggle();
+}
+function renderCommunityToggle(){
+  const el=$("setCommunity"); if(!el) return;
+  el.innerHTML=`<div class="switch" style="border-bottom:none"><span><div class="sw-label">Auto-publish new creations</div><div style="font-size:12px;color:var(--muted)">Every new creation appears in the community gallery.</div></span>
+   <span class="sw" onclick="PIPPIT.toggle('autoPub')" style="width:46px;height:26px;border-radius:999px;background:${SETTINGS.autoPub?'var(--accent)':'#d7d3e6'};position:relative;flex:none"><span style="position:absolute;top:3px;${SETTINGS.autoPub?'right:3px;background:#fff':'left:3px;background:#888'};width:20px;height:20px;border-radius:50%"></span></span></div>`;
+}
+function updateWhStatus(){
+  const s=SETTINGS.webhook||{}; const dot=$("whDot"), st=$("whState");
+  if(s.url){ dot.className="int-dot ok"; st.textContent="armed"; }
+  else { dot.className="int-dot"; st.textContent="not configured"; }
+}
+function updateUmiStatus(){
+  const s=SETTINGS.umami||{}; const dot=$("umiDot"), st=$("umiState");
+  if(s.id){ dot.className="int-dot ok"; st.textContent="tracking"; }
+  else { dot.className="int-dot"; st.textContent="not configured"; }
+}
+function updateStripeStatus(){
+  const s=SETTINGS.stripe||{}; const dot=$("stripeDot"), st=$("stripeState");
+  if(s.url){ dot.className="int-dot ok"; st.textContent="linked · "+s.url.replace(/^https?:\/\//,"").slice(0,30); }
+  else { dot.className="int-dot"; st.textContent="not configured"; }
+}
+
+/* ---- Credits & payments ---- */
+function buyCredits(){
+  const s=SETTINGS.stripe||{};
+  if(!s.url){ toast("Add a Stripe Payment Link in Settings first"); openSettings(); return; }
+  window.open(s.url,"_blank");
+}
+function openSubscribe(){
+  const s=SETTINGS.stripe||{};
+  const u=(s.subUrl&&s.subUrl.trim())||s.url;
+  if(u) window.open(u,"_blank");
+  else openSettings();
+}
+function renderCredits(){
+  SETTINGS.credits = SETTINGS.credits ?? 80;
+  const el=$("credEl"); if(el) el.textContent=SETTINGS.credits;
+}
+async function spend(cost){
+  SETTINGS.credits=Math.max(0,(SETTINGS.credits||0)-cost);
+  await saveSettings({credits:SETTINGS.credits}); renderCredits();
+}
+async function gate(cost){
+  if(SETTINGS.creditGate!==true) return true;
+  if((SETTINGS.credits||0)>=cost) return true;
+  toast("Not enough credits — add more or turn off the credit gate");
+  openSettings();
+  return false;
+}
+function wireIntegrations(){
+  $("supaSave").onclick=async()=>{
+    saveSettings({supa:{url:$("supaUrl").value.trim(),key:$("supaKey").value.trim()}});
+    supa=null; const m=$("supaMsg"); m.className="int-msg";
+    try{ const c=await ensureSupa(); if(!c) throw new Error("Fill in both the URL and the anon key."); m.textContent="Saved & connected — run the setup SQL once in Supabase if you haven't yet."; m.className="int-msg ok"; }catch(e){ m.textContent="Saved, but "+(e.message||e); m.className="int-msg bad"; }
+    updateSupaStatus(); renderSupaUser(); renderLib();
+  };
+  $("supaTest").onclick=async()=>{
+    const m=$("supaMsg"); m.textContent="Testing connection…"; m.className="int-msg";
+    try{
+      if(!window.supabaseJs) window.supabaseJs = await import("https://esm.sh/@supabase/supabase-js@2");
+      const c=window.supabaseJs.createClient($("supaUrl").value.trim(),$("supaKey").value.trim(),{auth:{persistSession:false}});
+      const {data,error}=await c.from("creations").select("id").limit(1);
+      if(error) throw error;
+      m.textContent="✓ Connected — the creations table exists."; m.className="int-msg ok";
+    }catch(e){ m.textContent="✗ "+(e.message||e); m.className="int-msg bad"; }
+  };
+  $("supaCopy").onclick=async()=>{ try{ await navigator.clipboard.writeText(SUPA_SQL); toast("SQL copied to clipboard"); }catch(e){ toast("Copy failed — select the text manually"); } };
+  $("supaSync").onclick=async()=>{
+    const m=$("supaMsg"); m.textContent="Syncing…"; m.className="int-msg";
+    try{
+      const n=await cloudPush(await loadLib()); await renderLib();
+      m.textContent=n?`✓ Synced ${n} creations to the cloud.`:"Not configured."; m.className=n?"int-msg ok":"int-msg bad";
+    }catch(e){ m.textContent="✗ "+(e.message||e); m.className="int-msg bad"; }
+  };
+  $("supaSignin").onclick=async()=>{
+    const m=$("supaMsg"), c=await ensureSupa();
+    if(!c){ m.textContent="Configure Supabase first."; m.className="int-msg bad"; return; }
+    const {data,error}=await c.auth.signInWithPassword({email:$("supaEmail").value.trim(),password:$("supaPass").value});
+    m.textContent=error?("✗ "+error.message):"✓ Signed in — your library now syncs under this account."; m.className=error?"int-msg bad":"int-msg ok";
+    renderSupaUser(); updateSupaStatus(); renderLib();
+  };
+  $("supaSignup").onclick=async()=>{
+    const m=$("supaMsg"), c=await ensureSupa();
+    if(!c){ m.textContent="Configure Supabase first."; m.className="int-msg bad"; return; }
+    const {data,error}=await c.auth.signUp({email:$("supaEmail").value.trim(),password:$("supaPass").value});
+    m.textContent=error?("✗ "+error.message):(data.session?"✓ Signed up & in — cloud library active.":"✓ Account created — check your email to confirm, then sign in."); m.className=error?"int-msg bad":"int-msg ok";
+    renderSupaUser(); updateSupaStatus(); renderLib();
+  };
+  $("stripeSave").onclick=()=>{ saveSettings({stripe:{url:$("stripeUrl").value.trim(),subUrl:$("stripeSubUrl").value.trim(),credits:Number($("stripeCredits").value)||200}}); updateStripeStatus(); $("stripeMsg").textContent="Saved — the Buy credits / Subscribe buttons now use your links."; };
+  $("stripeOpen").onclick=()=>{ const u=$("stripeUrl").value.trim(); if(!u){ $("stripeMsg").textContent="Paste your Payment Link URL first."; return; } window.open(u,"_blank"); };
+  $("stripeSubOpen").onclick=()=>{ const u=$("stripeSubUrl").value.trim(); if(!u){ $("stripeMsg").textContent="Paste a subscription Payment Link first."; return; } window.open(u,"_blank"); };
+  $("supaGoogle").onclick=async()=>{
+    const m=$("supaMsg"), c=await ensureSupa();
+    if(!c){ m.textContent="Configure Supabase first."; m.className="int-msg bad"; return; }
+    m.textContent="Redirecting to Google… (allowlist this page's URL in Supabase → Auth → URL Configuration if it doesn't return)"; m.className="int-msg";
+    const {data,error}=await c.auth.signInWithOAuth({provider:"google"});
+    if(error){ m.textContent="✗ "+error.message; m.className="int-msg bad"; }
+  };
+  $("whSave").onclick=()=>{
+    saveSettings({webhook:{url:$("whUrl").value.trim()}}); updateWhStatus();
+    $("whMsg").textContent=$("whUrl").value.trim()?"Saved — new creations will be POSTed here.":"Cleared — webhooks are off.";
+  };
+  $("whTest").onclick=async()=>{
+    const u=$("whUrl").value.trim(), m=$("whMsg");
+    if(!u){ m.textContent="Enter a webhook URL first."; return; }
+    m.textContent="Sending test payload…";
+    try{
+      const r=await root.superFetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({event:"test",generator:window.generatorName,message:"Surge.AI webhook test",time:Date.now()})});
+      m.textContent="✓ Sent ("+(r.status||"ok")+"). Check your channel.";
+    }catch(e){ m.textContent="✗ Failed: "+(e.message||e)+" (some services block cross-origin posts even through the proxy)"; }
+  };
+  $("umiSave").onclick=()=>{
+    saveSettings({umami:{url:$("umiUrl").value.trim(),id:$("umiId").value.trim()}}); updateUmiStatus();
+    const m=$("umiMsg");
+    m.textContent=$("umiId").value.trim()?"Saved — analytics active on next load.":"Enter a Website ID to enable.";
+    loadAnalytics();
+  };
+  $("stripePaid").onclick=()=>{
+    const n=Number($("stripeCredits").value)||200;
+    SETTINGS.credits=(SETTINGS.credits||0)+n; saveSettings({credits:SETTINGS.credits}); renderCredits();
+    $("stripeMsg").textContent=`✓ +${n} credits added to your balance.`; toast(`+${n} credits added`);
+  };
+}
+wireIntegrations();
+
+/* ---- Full video ---- */
+const VID_STEPS = {
+  Cinematic:["wide establishing shot of the setting","the journey begins, motion builds","close on the subject's face, emotion","sweeping reveal, scale and wonder","heroic finishing moment"],
+  Whimsical:["soft dreamy establishing shot","playful detail, gentle motion","delightful close-up","magical surprise","warm glowing resolution"],
+  Noir:["moody establishing shot, deep shadows","slow tension, long shadows","intimate noir close-up","high contrast turning point","stark dramatic fade"],
+  Adventure:["grand establishing shot","energetic action builds","dynamic close-up","epic confrontation","triumphant finale"],
+};
+async function makeVideo(){
+  const idea=$("vidPrompt").value.trim();
+  const style=$("vidStyle").value;
+  const err=$("vidErr"); err.textContent="";
+  if(!idea){ err.textContent="Describe your video idea first."; return; }
+  const Nf = Math.max(5, ((SETTINGS.dur||4)/4)*5);
+  if(!(await gate(Nf*10))) return;
+  const res = SETTINGS.res||"768x768";
+  const steps = VID_STEPS[style]||VID_STEPS.Cinematic;
+  const player=$("vidPlayer"); const script=$("vidScript");
+  player.hidden=false; script.hidden=false;
+  script.innerHTML='<span style="color:var(--muted)">🎬 directing '+Math.round(Nf)+' shots…</span>';
+  const shots=[]; const urls=[];
+  for(let i=0;i<Nf;i++){
+    await new Promise(r=>setTimeout(r,40));
+    let fr;
+    try{ fr = await root.generateImage({prompt:`${idea} — ${steps[i%steps.length]}${SETTINGS.kenburns?"":""}${style==="Cinematic"||style==="Noir"||style==="Adventure"||style==="Whimsical"?"":""}, ${style}, cohesive film, consistent subject and setting`,resolution:res,negativePrompt:NEG,hideGalleryButtons:true}); }
+    catch(e){ fr=null; }
+    if(fr){ urls.push(fr.dataUrl); shots.push(fr.dataUrl); const t=Math.floor((i/steps.length)); script.innerHTML = t<3? `<span style="color:var(--muted)">🎬 shot ${i+1}/${Math.round(Nf)}…</span>`:script.innerHTML; }
+  }
+  player.innerHTML=`<div class="vp-ctl"><span class="vp-chip">${style}</span><span class="vp-chip">${Math.round(Nf)} shots · ${SETTINGS.dur||4}s</span></div><div class="vp-stage" id="vpStage"></div><div class="vp-play" id="vpPlayBtn" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center"><span class="big">▶</span></div><div class="vp-bar"><i id="vpBarI"></i></div>`;
+  const stage=document.createElement("div"); stage.style.cssText="position:absolute;inset:0;overflow:hidden;border-radius:14px";
+  stage.innerHTML=shots.map((u,i)=>`<img src="${u}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;${SETTINGS.kenburns?`transition:transform 2.4s ease`:"transition:opacity .6s"}" data-i="${i}">`).join("");
+  player.style.cssText="position:relative;aspect-ratio:1;border-radius:14px;overflow:hidden;background:#000;margin-top:16px";
+  player.querySelector(".vp-stage").appendChild(stage);
+  player.querySelector(".vp-play").onclick=()=>{
+    player.querySelector(".vp-play").style.display="none";
+    const imgs=[...stage.children]; const per=((SETTINGS.dur||4)/imgs.length)*1000; const bar=player.querySelector("#vpBarI");
+    let idx=0, st=0;
+    imgs[0].style.opacity=1;
+    const barTimer=setInterval(()=>{ bar.style.width=Math.min(100,++st*4)+"%"; }, per/25);
+    const run=setInterval(()=>{ imgs[idx].style.opacity=0; idx=(idx+1)%imgs.length; imgs[idx].style.opacity=1; }, per);
+    setTimeout(()=>{ clearInterval(run); clearInterval(barTimer); player.querySelector(".vp-play").style.display="flex"; }, (SETTINGS.dur||4)*1000);
+  };
+  if(SETTINGS.script!=="off"){
+    try{
+      await root.generateText({instruction:`Write a short cinematic video script (3-4 lines, like shot-by-shot voiceover) for a video about: "${idea}", style: ${style}. Output only the script lines.`, onChunk:(d)=>{ script.innerHTML='<div style="font-size:13px;color:#4a445c;line-height:1.55">'+d.fullTextSoFar.replace(/\\n/g,"<br>")+'</div>'; }});
+    }catch(e){ script.textContent=""; }
+  } else { script.hidden=true; }
+  if(urls.length) await spend(Nf*10);
+  saveLib({urls, prompt:`${idea} (video)`, tool:"video"});
+}
+
+function switchTool(t){
+  const map={image:"toolImage",avatar:"toolAvatar",ad:"toolAd",storyboard:"toolStoryboard",video:"toolVideo"};
+  Object.entries(map).forEach(([k,id])=>{ $(id).style.display = k===t?"":"none"; });
+  document.querySelectorAll(".ptab").forEach(b=>b.classList.toggle("active", b.dataset.tool===t));
+}
+
+function toast(m){ const t=$("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove("show"),2200); }
+window.closeModal=()=>$("modalCtn").classList.remove("open");
+
+function bind(){
+  const q=["a fluffy cat diving at the Olympics","a cozy coffee brand launch","a fox in a neon forest at midnight","a vintage sci-fi poster"];
+  q.forEach(x=>{ const b=document.createElement("button"); b.className="chip"; b.innerHTML=x+` <span class="arr">→</span>`; b.onclick=()=>{ $("heroPrompt").value=x; switchTool("image"); $("toolImage").scrollIntoView({behavior:"smooth"}); }; $("quickChips").appendChild(b); });
+
+  document.querySelectorAll(".ptab").forEach(b=>b.onclick=()=>switchTool(b.dataset.tool));
+  document.querySelectorAll(".tool-card").forEach(b=>{ b.onclick=()=>{ switchTool(b.dataset.tool); $("studioPanel").scrollIntoView({behavior:"smooth"}); }; });
+
+  $("heroGo").onclick=async()=>{
+    const v=$("heroPrompt").value.trim(); if(!v) return;
+    if(!(await gate(40))) return;
+    const r=await runImageBatch(v,4,$("imgStyle").value,"square",$("imgOut"),$("imgErr"),"image");
+    if(r.urls.length) await spend(40);
+    saveLib({urls:r.urls,prompt:v,tool:"image"});
+    switchTool("image"); $("studioPanel").scrollIntoView({behavior:"smooth"});
+  };
+  $("imgGo").onclick=async()=>{ const v=$("imgPrompt").value.trim(); if(!v){$("imgErr").textContent="Describe an image first."; return;} if(!(await gate(40))) return; const r=await runImageBatch(v,4,$("imgStyle").value,"square",$("imgOut"),$("imgErr"),"image"); if(r.urls.length) await spend(40); saveLib({urls:r.urls,prompt:v,tool:"image"}); };
+  $("avGo").onclick=async()=>{ const v=$("avPrompt").value.trim(); if(!(await gate(40))) return; const r=await runImageBatch(v,4,$("avLook").value,"square",$("avOut"),$("avErr"),"avatar"); if(r.urls.length) await spend(40); saveLib({urls:r.urls,prompt:v||"Custom avatar",tool:"avatar"}); };
+  $("adGo").onclick=makeAd;
+  $("sbGo").onclick=async()=>{ const v=$("sbPrompt").value.trim(); if(!v){$("sbErr").textContent="Describe your scene first."; return;} if(!(await gate(40))) return; const r=await runImageBatch(v,3,$("sbMood").value,"landscape",$("sbOut"),$("sbErr"),"storyboard"); if(r.urls.length) await spend(40); const sy=$("sbSyn"); sy.hidden=false; sy.textContent="✦ writing a 3-beat scene breakdown…"; try{ const t=await root.generateText({instruction:`You are a film director. Write a vivid 3-shot storyboard for: "${v}". One short line per shot, formatted as:\nSHOT 1: ...\nSHOT 2: ...\nSHOT 3: ...`}); sy.textContent=t.text||""; }catch(e){ sy.textContent=""; } saveLib({urls:r.urls,prompt:v,tool:"storyboard"}); };
+}
+
+/* ---- GitHub integration ---- */
+function ghTok(){ return ((SETTINGS.github||{}).token||$("ghToken").value.trim()); }
+async function ghApi(path, method, body){
+  const r = await fetch("https://api.github.com"+path, {method:method||"GET", headers:{"Accept":"application/vnd.github+json","Authorization":"Bearer "+ghTok(),"X-GitHub-Api-Version":"2022-11-28"}, body: body?JSON.stringify(body):undefined});
+  let j=null; try{ j=await r.json(); }catch(e){}
+  if(!r.ok){ let msg=(j&&j.message)||("HTTP "+r.status); if(j&&j.errors) msg+=" — "+JSON.stringify(j.errors); throw new Error(msg); }
+  return j;
+}
+function b64(str){ return btoa(unescape(encodeURIComponent(str))); }
+function renderGhUI(){
+  const g=SETTINGS.github||{};
+  $("ghToken").value=g.token||"";
+  const ok=!!g.token;
+  $("ghDot").className="int-dot"+(ok?" ok":"");
+  $("ghState").textContent=ok?("connected · "+(g.user||"github")):"not connected";
+  $("ghBody").style.display=ok?"":"none";
+  if(ok){ $("ghUser").textContent=g.user||"github"; listGitHubRepos(g.repo).catch(()=>{}); }
+  $("ghMsg").textContent="";
+}
+async function connectGitHub(){
+  const m=$("ghMsg"), t=$("ghToken").value.trim();
+  if(!t){ m.textContent="Paste your Personal Access Token first."; m.className="int-msg bad"; return; }
+  m.textContent="Connecting…"; m.className="int-msg";
+  try{
+    await ghApi("/user");
+    saveSettings({github:Object.assign({}, SETTINGS.github, {token:t, user:""})});
+    let j; try{ j=await ghApi("/user"); }catch(e){}
+    if(j&&j.login) saveSettings({github:Object.assign({}, SETTINGS.github, {token:t, user:j.login})});
+    m.textContent="✓ Connected as @"+(j&&j.login||"github")+" — pick a repository below."; m.className="int-msg ok";
+    renderGhUI();
+  }catch(e){ m.textContent="✗ "+(e.message||e)+(String(e.message).toLowerCase().includes("not accessible")?" — your token lacks permission. Use a classic token with the repo scope (see above).":""); m.className="int-msg bad"; }
+}
+async function listGitHubRepos(selected){
+  const sel=$("ghRepo"); if(!sel) return;
+  sel.innerHTML='<option value="">…loading…</option>';
+  try{
+    const json=await ghApi("/user/repos?per_page=100&sort=updated&affiliation=owner,collaborator");
+    const options=json.map(r=>`<option value="${r.full_name}">${r.full_name} (${r.private?"private":"public"})</option>`).join("");
+    sel.innerHTML=options? options : '<option value="">No repositories found</option>';
+    if(selected&&sel.querySelector(`option[value="${selected}"]`)) sel.value=selected;
+    if(sel.value&&SETTINGS.github) saveSettings({github:Object.assign({},SETTINGS.github,{repo:sel.value})});
+  }catch(e){ sel.innerHTML='<option value="">failed to load — check token</option>'; }
+  sel.onchange=()=>{ if(SETTINGS.github) saveSettings({github:Object.assign({},SETTINGS.github,{repo:sel.value})}); };
+}
+async function createGitHubRepo(){
+  const name=$("ghName").value.trim().toLowerCase().replace(/[^a-z0-9_\-]/g,"-");
+  const priv=$("ghPrivate").value==="true";
+  const m=$("ghMsg");
+  if(!name){ m.textContent="Enter a repository name."; m.className="int-msg bad"; return; }
+  m.textContent="Creating repository…"; m.className="int-msg";
+  try{
+    const j=await ghApi("/user/repos","POST",{name, private:priv, auto_init:true, description:"Surge.AI creations export"});
+    if(SETTINGS.github) saveSettings({github:Object.assign({},SETTINGS.github,{repo:j.full_name})});
+    m.textContent="✓ Created "+j.full_name; m.className="int-msg ok";
+    listGitHubRepos(j.full_name);
+    $("ghName").value="";
+  }catch(e){ m.textContent="✗ "+(e.message||e); m.className="int-msg bad"; }
+}
+async function syncToGitHub(){
+  const g=SETTINGS.github;
+  if(!g||!g.token||!g.repo){ const m=$("ghMsg"); m.textContent="Connect and pick or create a repository first."; m.className="int-msg bad"; return; }
+  const m=$("ghMsg"); m.textContent="Pushing the full app to "+g.repo+"…"; m.className="int-msg";
+  try{
+    const setFile=async(p, content)=>{
+      let sha=null;
+      try{ const c=await ghApi("/repos/"+g.repo+"/contents/"+encodeURIComponent(p)); if(c&&c.sha) sha=c.sha; }catch(e){}
+      const payload={message:sha?"Update "+p:"Add "+p, content:b64(content)}; if(sha) payload.sha=sha;
+      await ghApi("/repos/"+g.repo+"/contents/"+encodeURIComponent(p),"PUT",payload);
+    };
+    // Fetch src/* live when reachable, else fall back to the generated manifest.
+    async function srcText(p){ try{ const r=await fetch(p); if(r.ok) return await r.text(); }catch(e){} return (window.APP_SOURCES&&APP_SOURCES[p])||""; }
+    const appFiles = (window.APP_SOURCES||{});
+    const files={};
+    if(appFiles["index.html"]) files["index.html"]=appFiles["index.html"];
+    if(appFiles["main.pjs"]) files["main.pjs"]=appFiles["main.pjs"];
+    files["README.md"]="# Surge.AI — AI Creative Agent\n\nA functional clone of pippit.ai: generate images, digital avatars, ad creatives, storyboards, videos, stories and voiceovers from a single idea.\n\nPushed from the Surge.AI generator. Open index.html for the app, main.pjs for the Perchance config, and src/ for modules.\n";
+    files["webflow.json"]='{\n  "cloud": {\n    "framework": "static"\n  }\n}\n';
+    for(const p of ["src/musicEngine.js","src/lyrics.js","src/README.md"]){ const t=await srcText(p); if(t) files[p]=t; }
+    for(const p of Object.keys(files)){ await setFile(p, files[p]); }
+    let n=Object.keys(files).length;
+    m.textContent="✓ Pushed "+n+" files ("+Object.keys(files).join(", ")+") to "+g.repo; m.className="int-msg ok";
+  }catch(e){ m.textContent="✗ "+(e.message||e); m.className="int-msg bad"; }
+}
+
+/* ---- View navigation ---- */
+function go(view, tool){
+  const map={home:"viewHome",story:"viewStory",assets:"viewAssets",smart:"viewSmart",publisher:"viewPublisher"};
+  Object.values(map).forEach(id=>{ const el=$(id); if(el) el.hidden = id!==map[view]; });
+  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active", b.dataset.view===view && !tool));
+  if(tool){ switchTool(tool); const sp=$("studioPanel"); if(sp) sp.scrollIntoView({behavior:"smooth"}); }
+  window.scrollTo({top:0});
+  if(view==="assets"&&typeof renderAssets==="function") renderAssets();
+  if(view==="publisher"&&typeof renderPublisher==="function") renderPublisher();
+}
+
+/* ---- Story Studio ---- */
+async function makeStory(){
+  const idea=$("storyPremise").value.trim(); const genre=$("storyGenre").value;
+  const err=$("storyErr"); err.textContent="";
+  if(!idea){ err.textContent="Give me a premise first."; return; }
+  if(!(await gate(60))) return;
+  const txt=$("storyBody"); const imgs=$("storyImgs");
+  txt.style.display="block"; txt.innerHTML='<span style="color:var(--muted)">✍ writing your story…</span>'; imgs.innerHTML="";
+  let full="";
+  try{
+    full = await root.generateText({instruction:`You are a brilliant storyteller. Write a complete short ${genre.toLowerCase()} story (roughly 260-350 words) based on this premise: "${idea}".
+Use vivid, readable prose with a clear arc and a satisfying ending. Put a short story title on the very first line.` , onChunk:d=>{ txt.innerHTML=d.fullTextSoFar.replace(/\n/g,"<br>"); }});
+  }catch(e){ txt.innerHTML="Story generation failed."; }
+  const text=(full&&(full.text||full))||"";
+  let coverUrl="";
+  if(SETTINGS.aiImg!==false){
+    try{ const res=await root.generateImage({prompt:`Storybook cover illustration for a ${genre.toLowerCase()} story: ${idea}, richly illustrated, cinematic lighting`,resolution:"768x768",negativePrompt:NEG,hideGalleryButtons:true}); coverUrl=res.dataUrl; const im=document.createElement("img"); im.src=res.dataUrl; im.style.cssText="width:100%;border-radius:14px;display:block;margin-top:14px"; imgs.appendChild(im); }catch(e){}
+  }
+  if(text||coverUrl){ await spend(60); saveLib({urls:coverUrl?[coverUrl]:[], prompt:`${idea} (${genre} story)`, tool:"story", story:text}); }
+}
+
+/* ---- Assets ---- */
+let assetFilter="all";
+function assetCard(it){
+  if(it.urls&&it.urls.length){
+    return `<div class="libcard" onclick="PIPPIT.openAsset('${it.id}')"><img src="${it.urls[0]}"><span style="position:absolute;bottom:0;left:0;right:0;padding:18px 10px 8px;font-size:12px;background:linear-gradient(transparent,rgba(0,0,0,.6));color:#fff">${it.tool}</span>${pubSet.has(it.id)?'<span style="position:absolute;top:8px;right:8px;font-size:12px;background:rgba(0,0,0,.5);color:#fff;padding:2px 7px;border-radius:99px">🌍</span>':''}</div>`;
+  }
+  const isA=it.tool==="audio", isS=it.tool==="story";
+  return `<div class="libcard" style="background:linear-gradient(135deg,${isA?'#5a4bd6,#b06bff':'#2b2f77,#6950c2'})" onclick="PIPPIT.openAsset('${it.id}')"><div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding:12px;text-align:center"><div style="font-size:30px">${isA?'🎙':'📖'}</div><div style="font-size:12px;font-weight:600;margin-top:6px">${it.tool}</div><div style="font-size:11px;opacity:.85;max-width:90%;max-height:34px;overflow:hidden">${(isA?(it.text||""):(it.prompt||"")).slice(0,60)}</div></div></div>`;
+}
+async function renderAssets(){
+  const grid=$("assetGrid"); if(!grid) return;
+  const list=await mergedLib();
+  const q=((window.assetSearch&&$("assetSearch").value)||"").toLowerCase();
+  const rows=list.filter(i=>(assetFilter==="all"||i.tool===assetFilter) && (!q||((i.prompt||"")+" "+(i.tool||"")+" "+(i.text||"")).toLowerCase().includes(q)));
+  if(!rows.length){ grid.innerHTML=`<div class="empty" style="padding:40px">No ${assetFilter==='all'?'':assetFilter+' '}assets found.</div>`; return; }
+  grid.innerHTML=rows.map(assetCard).join("");
+}
+
+/* ---- Smart creation ---- */
+function smartGo(){
+  const goal=$("smartGoal").value; const idea=$("smartIdea").value.trim();
+  const err=$("smartErr"); err.textContent="";
+  if(!idea){ err.textContent="Describe your idea first."; return; }
+  if(goal==="story"){ go("story"); $("storyPremise").value=idea; $("storyGo").click(); return; }
+  if(goal==="voice"){ go("home","avatar"); $("voiceText").value=idea; $("voiceGo").click(); window.scrollTo({top:document.body.scrollHeight}); return; }
+  switchTool(goal); go("home");
+  if(goal==="image"){ $("imgPrompt").value=idea; setTimeout(()=>$("imgGo").click(),50); }
+  else if(goal==="avatar"){ $("avPrompt").value=idea; setTimeout(()=>$("avGo").click(),50); }
+  else if(goal==="ad"){ $("adProduct").value=idea; setTimeout(()=>$("adGo").click(),50); }
+  else if(goal==="video"){ $("vidPrompt").value=idea; setTimeout(()=>$("vidGo").click(),50); }
+}
+
+/* ---- Voices (text-to-speech) ---- */
+function populateVoices(){
+  const sel=$("voicePick"); if(!sel) return;
+  const vs=("speechSynthesis" in window)? speechSynthesis.getVoices() : [];
+  sel.innerHTML=vs.map(v=>`<option value="${v.name}">${v.name} (${v.lang})</option>`).join("")||'<option value="">No voices available in this browser</option>';
+}
+function speak(text,voiceName){
+  if(!("speechSynthesis" in window)||!text) return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  const vs=speechSynthesis.getVoices().find(v=>v.name===voiceName); if(vs) u.voice=vs;
+  speechSynthesis.speak(u);
+}
+function doVoice(){
+  const text=$("voiceText").value.trim();
+  const err=$("voiceErr"); if(err) err.textContent="";
+  if(!text){ if(err) err.textContent="Type something to say first."; return; }
+  speak(text,$("voicePick").value);
+  saveLib({urls:[], text, voice:$("voicePick").value, prompt:text, tool:"audio"});
+  toast("Voice saved to your library — press Play to hear it");
+}
+
+/* ---- Publisher ---- */
+async function renderPublisher(){
+  const cfg=SETTINGS.supa&&SETTINGS.supa.url;
+  if(!cfg) $("pubMsg").innerHTML="<b>Connect Supabase in Settings → Cloud library</b> to publish to the community. Until then this page shows your local library and planner.";
+  const list=await mergedLib();
+  const mine=list.filter(i=>pubSet.has(i.id));
+  const pl=$("pubList");
+  if(!mine.length){ pl.innerHTML='<div class="empty" style="padding:14px">You haven\'t published anything yet.</div>'; }
+  else { pl.innerHTML=mine.map(it=>`<div class="int-row"><span style="flex:1">${it.tool} — ${(it.prompt||"").slice(0,60)}</span><button class="int-btn" data-unpub="${it.id}">🌍 Unpublish</button></div>`).join(""); pl.querySelectorAll("[data-unpub]").forEach(b=>b.onclick=()=>unpublishItem(b.dataset.unpub)); }
+  const counts={}; list.forEach(i=>counts[i.tool]=(counts[i.tool]||0)+1);
+  $("pubStats").innerHTML=Object.entries(counts).map(([k,v])=>`<span style="background:var(--accent-soft);color:var(--accent);font-weight:600;border-radius:99px;padding:8px 13px;font-size:13px">${k}: ${v}</span>`).join("")||'<span style="color:var(--muted)">No assets yet</span>';
+  let plans=[]; try{ plans=await root.kv.planner.get("list")||[]; }catch(e){}
+  const planEl=$("planList");
+  planEl.innerHTML=plans.length?plans.map((p,i)=>`<div class="int-row"><span style="flex:1">${p}</span><button class="int-btn" data-del="${i}">✕</button></div>`).join(""):'<div style="color:var(--muted);font-size:13px">No planned ideas yet.</div>';
+  planEl.querySelectorAll("[data-del]").forEach(b=>b.onclick=async()=>{ let a=[]; try{ a=await root.kv.planner.get("list")||[]; }catch(e){} a.splice(Number(b.dataset.del),1); try{ await root.kv.planner.set("list",a); }catch(e){} renderPublisher(); });
+  $("planGo").onclick=async()=>{ const v=$("planAdd").value.trim(); if(!v) return; let a=[]; try{ a=await root.kv.planner.get("list")||[]; }catch(e){} a.push(v); try{ await root.kv.planner.set("list",a); }catch(e){} $("planAdd").value=""; renderPublisher(); };
+}
+window.go=go;
+
+/* Static wiring for the new views */
+document.querySelectorAll("#nav button").forEach(b=>b.onclick=()=>go(b.dataset.view,b.dataset.tool));
+if(document.getElementById("storyGo")) $("storyGo").onclick=makeStory;
+if(document.getElementById("assetSearch")) $("assetSearch").addEventListener("input",()=>renderAssets());
+if(document.getElementById("assetTabs")){ document.querySelectorAll("#assetTabs .ptab").forEach(b=>b.onclick=()=>{ assetFilter=b.dataset.f; document.querySelectorAll("#assetTabs .ptab").forEach(x=>x.classList.toggle("active",x===b)); renderAssets(); }); }
+if(document.getElementById("smartGo")) $("smartGo").onclick=smartGo;
+if(document.getElementById("voiceGo")) $("voiceGo").onclick=doVoice;
+if(document.getElementById("voiceStop")) $("voiceStop").onclick=()=>{ if("speechSynthesis" in window) speechSynthesis.cancel(); };
+if(document.getElementById("ghConnect")){ $("ghConnect").onclick=connectGitHub; $("ghRefresh").onclick=()=>listGitHubRepos(); $("ghCreate").onclick=createGitHubRepo; $("ghSync").onclick=syncToGitHub; }
+populateVoices(); if("speechSynthesis" in window) speechSynthesis.onvoiceschanged=populateVoices;
+
+return {init:async()=>{ bind(); $("vidGo").onclick = ()=>{ if(SETTINGS.aiImg===false){ $("vidErr").textContent="AI image generator is off in Settings."; return; } makeVideo(); }; (async()=>{ await loadSettings(); renderSettings(); renderCommunity(); })(); renderCredits(); (async()=>{ await loadPubSet(); renderLib(); })(); loadAnalytics(); const f=$("featured"); f.innerHTML=FEATURED.map(x=>`<div class="tile" style="cursor:pointer" onclick="PIPPIT.openFeatured('${x[1]}','${x[0]}','${x[2]}')"><img src="${x[2]}"><span style="position:absolute;bottom:0;left:0;right:0;padding:20px 10px 10px;font-size:13px;font-weight:600;background:linear-gradient(transparent,rgba(0,0,0,.65));color:#fff">${x[0]}<div style="font-weight:400;font-size:12px;opacity:.85">${x[1]}</div></span></div>`).join(""); },
+  openFeatured:(u,t,img)=>{ $("mTool").textContent="★ featured"; $("mPrompt").textContent=t+" — "+u; $("mImgs").innerHTML=`<img src="${img}">`; $("mDel").style.display="none"; $("mShare").style.display="none"; $("mPub").style.display="none"; $("mDl").style.display="none"; const old=$("mImgs").nextElementSibling; if(old&&old.classList.contains("share-box")) old.remove(); $("modalCtn").classList.add("open"); },
+  openCommunity:(id)=>{ const r=commRows.find(x=>x.id===id); if(!r) return; $("mTool").textContent=r.tool||"community art"; $("mPrompt").textContent=(r.prompt||"")+"\n— by "+(r.author||"anonymous"); $("mImgs").innerHTML=r.urls.map(u=>`<img src="${u}">`).join(""); $("mDel").style.display="none"; $("mShare").style.display="none"; $("mPub").style.display="none"; $("mDl").style.display=""; $("mDl").onclick=()=>downloadItem(r); $("modalCtn").classList.add("open"); },
+  openAsset:async(id)=>{ const list=await mergedLib(); const it=list.find(x=>x.id===id); if(it) showItem(it); },
+  toggle:(k)=>{ saveSettings({[k]:!SETTINGS[k]}); if(typeof renderSettings==="function") renderSettings(); },
+  buyCredits, openSubscribe
+};
+})();
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") $("modalCtn").classList.remove("open"); });
+window.__boot = PIPPIT.init();
+</script>
