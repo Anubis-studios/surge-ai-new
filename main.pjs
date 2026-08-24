@@ -1,0 +1,11 @@
+$meta
+  title = Surge.AI — AI Creative Agent
+  description = Your AI creative agent. Generate images, digital avatars, ad creatives, and storyboards from a single idea. A functional clone of pippit.ai
+  image = https://user.uploads.dev/file/83c0b741179fa141d329e4bc08c262c7.jpg
+  tags = ai, image, avatar, ad, storyboard, creative, pippit, generator
+
+generateImage = {import:text-to-image-plugin}
+generateText = {import:ai-text-plugin}
+kv = {import:kv-plugin}
+uploadPlugin = {import:upload-plugin}
+superFetch = {import:super-fetch-plugin}
